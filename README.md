@@ -37,6 +37,7 @@
       ->          = await signInWithPopup(authService, provider);
    
 5. Collection 
+   dbService.collection( "   " ) 대신 collection(dbService, "  ")
    
    #Add 
    
@@ -57,5 +58,25 @@
       const dbNweets = await getDocs(collecion(dbService, "nweets"));
       
       
-6. Snapshot -> RealTime DB
+   # Snapshot -> RealTime DB
   
+   import { onSnapshot } from "firebase/firestore";
+   dbService.collection("nweets").onSnapshot((snapshot) => ...)
+    
+   -> onSnapshot(collection(dbService, "nweets"), (snapshot) => ... )
+
+6. doc
+
+   const data = await dbService.doc(`nweets/${nweetObj}.id}`);
+   ->         = doc(dbService, `nweets/${nweetObj}.id`);
+   
+   #delete
+   const data = await dbService.doc(`nweets/${nweetObj}.id}`).delete();
+   ->         = delete(doc(dbService, "nweets", `${nweetObj}.id`));
+                                        
+                                      
+   #update
+   dbService.doc(`nweets/${nweetObj}.id}`).update( { text: newWeet });
+   -> update(doc(dbService, "nweets", `${nweetObj},id`), {text: newNweet});
+                                           변경할 기존 값,      변경할 값
+                                           
